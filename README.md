@@ -1,9 +1,9 @@
-# CMake - Cpp Starter Project
+# CMake - Cpp Scaffold Project
 ## Introduction
 An example scaffold Cpp repo for CMake build system. The purpose is to give some insights on how to structure big projects with internal and/or external dependencies. There are several examples on the web how to create libraries (static/shared/header-only) alone but I couldn't find a good and clean explanation on how to create/consume libraries internally in a big cpp project so I provide this repo.
 
 ## Requirements
-- CMake (> 3.15)
+- CMake (> 3.17)
 - Powershell
 - NSIS (If packaging with NSIS is chosen)
 
