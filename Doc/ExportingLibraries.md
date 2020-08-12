@@ -1,13 +1,6 @@
 # Exporting and Packaging Libraries
 
-## Resources
-
-- https://github.com/forexample/package-example
-- https://codingnest.com/basic-cmake-part-2/
-- https://cliutils.gitlab.io/modern-cmake/chapters/install.html
-- https://coderwall.com/p/qej45g/use-cmake-enabled-libraries-in-your-cmake-project-iii
-
-## Export Static library
+## Export library
 ```cmake
 
 set(Target_NAME "${This}Targets")
@@ -67,6 +60,17 @@ install(DIRECTORY include/${This}
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     FILES_MATCHING PATTERN "*.h"
 )
+
+export(EXPORT ${Target_NAME}
+    FILE ${CMAKE_CURRENT_BINARY_DIR}/${TargetsFileName}
+    NAMESPACE BC::
+)
+
+export(PACKAGE ${This})
 ```
 
 ## Some essential links
+- https://github.com/forexample/package-example
+- https://codingnest.com/basic-cmake-part-2/
+- https://cliutils.gitlab.io/modern-cmake/chapters/install.html
+- https://coderwall.com/p/qej45g/use-cmake-enabled-libraries-in-your-cmake-project-iii
