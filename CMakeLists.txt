@@ -16,7 +16,7 @@ enable_testing()
 include(cmake/gtestsetup.cmake)
 
 # Source
-add_subdirectory(Source)
+add_subdirectory(src)
 
 #Tests
 include(CTest)
