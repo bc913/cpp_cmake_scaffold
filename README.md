@@ -11,7 +11,7 @@ An example scaffold Cpp repo for CMake build system. The purpose is to give some
 - Windows
 
 ## Third-party dependencies (External)
-These are the dependencies which are external to this repo and/or created by other library authors. See [Third-Party Dependencies in CMake](Doc/DependenciesCMake.md) section for details. Currently, no third-party dependecy is studied under this repo.
+These are the dependencies which are external to this repo and/or created by other library authors. See [Third-Party Dependencies in CMake](doc/DependenciesCMake.md) section for details. Currently, no third-party dependecy is studied under this repo.
 
 ## Build
 `BuildProject.ps1` script takes care of configuring and building the project. It can determine the running OS and specifies the build directory accordingly. The default architecture is `x64`, default configuration is `Release` and default build directory name is `Build`.
@@ -55,7 +55,7 @@ Static, Shared and header-only libraries can be defined and consumed in various 
 - Consume as an implementation detail: The target and its exported names are the part of the implementation detail for the consumer target. They are consumed in .cpp files. Not exposed in any of the consumer's interface (headers).
 - Consume as part of the API: If any name in the target is exposed through consumer target's interface (API or headers).
 
-2. Consume through exporting: Consume the libraries (targets) through exporting and packaging. This requires some additional steps to be defined in the target's CMakeLists file. This part is not covered for this repository yet. See [**Exporting and Packaging Libraries**](Doc/ExportingLibraries.md) for details. 
+2. Consume through exporting: Consume the libraries (targets) through exporting and packaging. This requires some additional steps to be defined in the target's CMakeLists file. This part is not covered for this repository yet. See [**Exporting and Packaging Libraries**](doc/ExportingLibraries.md) for details. 
 
 ### Header-Only
 #### Definition
@@ -213,5 +213,5 @@ cd .\Build\win-x64\
 cpack -G ZIP -C Release -B packaging -P BcStatic -D CPACK_MONOLITHIC_INSTALL=1 --verbose
 ```
 
-## [Useful Links](Doc/Links.md)
+## [Useful Links](doc/Links.md)
 
