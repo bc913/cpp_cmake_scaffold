@@ -7,13 +7,13 @@ if(NOT WIN32)
     message(FATAL_ERROR "Only Windows OS is supported currently.")
 endif()
 
-include(Cmake/LogVariables.cmake)
-include(Cmake/GlobalSettings.cmake)
+include(cmake/logvariables.cmake)
+include(cmake/globalsettings.cmake)
 
 # Test setup
 # enable_testing() should be called in the root cmakeLists.txt
 enable_testing()
-include(Cmake/GTestSetup.cmake)
+include(cmake/gtestsetup.cmake)
 
 # Source
 add_subdirectory(Source)
@@ -23,4 +23,4 @@ include(CTest)
 add_subdirectory(Tests)
 
 #Pack
-include(CMake/CPackSettings.cmake)
+include(cmake/cpacksettings.cmake)
