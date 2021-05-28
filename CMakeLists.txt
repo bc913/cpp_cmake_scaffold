@@ -20,7 +20,7 @@ add_subdirectory(Source)
 
 #Tests
 include(CTest)
-add_subdirectory(Tests)
+add_subdirectory(tests)
 
 #Pack
 include(cmake/cpacksettings.cmake)
