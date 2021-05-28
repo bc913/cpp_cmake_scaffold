@@ -7,7 +7,7 @@ set(CPACK_PACKAGE_VENDOR "BC913")
 # Description
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_NAME})
 # A text file used to describe the project. Used, for example, the introduction screen of a CPack-generated Windows installer to describe the project.
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/Description.txt")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/packaging/Description.txt")
 set(CPACK_PACKAGE_HOMEPAGE_URL "github.com/bc913")
 # Versioning
 # https://www.zachburlingame.com/2011/02/versioning-a-native-cc-binary-with-visual-studio/
@@ -16,10 +16,10 @@ set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
  #resource
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/LICENCE")
-set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/README.md")
-set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/GenericWelcome.txt")
-# set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/icons/ship.png")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/packaging/LICENCE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/packaging/README.md")
+set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/packaging/GenericWelcome.txt")
+# set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/ship.png")
 # packaging
 
 # installation
@@ -58,7 +58,7 @@ else()
   set(CPACK_SOURCE_STRIP_FILES "")
 endif()
 
-#set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/icons/ship.png")
+#set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/ship.png")
 
 
 include(CPack)
