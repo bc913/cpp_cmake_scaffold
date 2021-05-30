@@ -1,4 +1,4 @@
-param([string]$Configuration="Release", [string]$Platform="x64", [string]$BuildDirName="Build", [bool]$CleanBuild=$true, [string]$OutputDir="", [string]$OutputName="")
+param([string]$Configuration="Release", [string]$Platform="x64", [string]$BuildDirName="build", [bool]$CleanBuild=$true, [string]$OutputDir="", [string]$OutputName="")
 
 # check values
 if([string]::IsNullOrEmpty($BuildDirName))
@@ -61,7 +61,7 @@ $systemInfo = [System.Environment]::OSVersion
 Write-Host "System Info: $systemInfo"
 
 Write-Host "================================" -ForegroundColor Yellow
-Write-Host "       Building                 " -ForegroundColor Yellow
+Write-Host "       Build & Install          " -ForegroundColor Yellow
 Write-Host "================================" -ForegroundColor Yellow
 if ($IsWin) 
 {
