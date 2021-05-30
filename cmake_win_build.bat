@@ -24,12 +24,16 @@ if %CLEANBUILD%==1 (
 )
 @echo.
 
-@echo Generating
+@echo Generate
 @echo.
-if %CLEANBUILD%==1 (cmake -G %GENERATOR% -A %PLATFORM% -B %BUILDDIR%)
+if %CLEANBUILD%==1 (cmake -G %GENERATOR% -A %PLATFORM% -B %BUILDDIR% -DCMAKE_INSTALL_PREFIX=install -DCMAKE_BUILD_TYPE=%CONFIGURATION%)
 @echo.
 
-@echo Building
+@echo Build
 @echo.
 cmake --build %BUILDDIR% --config %CONFIGURATION% --verbose
 @echo.
+
+@echo Install
+@echo.
+cmake --install %BUILDDIR% --config %CONFIGURATION% --verbose

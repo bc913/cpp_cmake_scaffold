@@ -7,6 +7,9 @@ MESSAGE(STATUS "########## Begin Cmake Variable Logging ##########")
 # this is the top level directory of your build tree
 MESSAGE( STATUS "CMAKE_BINARY_DIR:         " ${CMAKE_BINARY_DIR} )
 
+MESSAGE( STATUS "CMAKE_INSTALL_PREFIX:         " ${CMAKE_INSTALL_PREFIX} )
+
+
 # if you are building in-source, this is the same as CMAKE_CURRENT_SOURCE_DIR, otherwise this
 # is the directory where the compiled or generated files from the current CMakeLists.txt will go to
 MESSAGE( STATUS "CMAKE_CURRENT_BINARY_DIR: " ${CMAKE_CURRENT_BINARY_DIR} )
