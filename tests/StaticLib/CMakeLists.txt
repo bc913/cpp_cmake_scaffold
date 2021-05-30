@@ -1,18 +1,17 @@
 # Tests/Staticib
 cmake_minimum_required(VERSION 3.17.3)
+project(bc_static_tests VERSION ${CMAKE_PROJECT_VERSION} LANGUAGES CXX)
 
-set(This BcStaticTests)
+add_executable(${PROJECT_NAME} "")
 
-add_executable(${This} "")
-
-target_sources(${This} 
+target_sources(${PROJECT_NAME} 
     PRIVATE
-        TestAge.cpp
+        test_lcs.cpp
 )
 
-target_link_libraries(${This} PRIVATE gtest_main BcStatic)
+target_link_libraries(${PROJECT_NAME} PRIVATE gtest_main bc_static)
 
 add_test(
-    NAME ${This}
-    COMMAND ${This} --config Debug|Release
+    NAME ${PROJECT_NAME}
+    COMMAND ${PROJECT_NAME} --config Debug|Release
 )
