@@ -28,7 +28,10 @@ target_compile_definitions(${This} PUBLIC STATICLIBCONSTANT=4)
 target_compile_definitions(${This} INTERFACE STATIC_LIB_DEF="This is static lib definition")
 
 # Link header-only file
-target_link_libraries(${This} PRIVATE BcHeaderOnly)
+target_link_libraries(
+    ${PROJECT_NAME} 
+    PRIVATE bc_header_only
+)
 
 # Install setup
 include(GNUInstallDirs)

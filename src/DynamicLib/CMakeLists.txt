@@ -17,8 +17,9 @@ target_sources(${This}
 # No need to define INCLUDES in install command unless one wants to have a custom design
 target_include_directories(${This} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# Link static library as PRIVATE so any target that links against this (BcDynamic) target does not need to link against BcStatic
-target_link_libraries(${This} PRIVATE BcStatic)
+# Link to a library as PRIVATE so any target that links against this (bcdynamic) 
+# target does not need to link against that library
+target_link_libraries(${PROJECT_NAME} PRIVATE bc_header_only)
 
 # Preproccessor definitions
 # Whoever consumes or links to this library will have this preprocessor definition since it is PUBLIC

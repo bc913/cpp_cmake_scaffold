@@ -1,7 +1,7 @@
 #include <iostream>
 #include <BcStatic/Age.h>
 #include <BcDynamic/Person.h>
-#include <BcHeaderOnly/Utilities.h>
+#include <bcheaderonly/sort.h>
 
 int main(int argc, char *argv[])
 {
@@ -16,9 +16,15 @@ int main(int argc, char *argv[])
     std::cout << "Person's name: " << person.GetName() << std::endl;
     std::cout << DYNAMIC_LIB_DEF << std::endl;
 
-    std::cout << "== Client executable target is consuming header-only library ==" << std::endl;
-    std::cout << "Max(5,6): " << BC::Utilities::Max(5, 6) << std::endl;
-    std::cout << HEADER_ONLY_LIB_DEF << std::endl;
+
+    std::cout << "== Client executable target is consuming header-only library ==" << "\n";
+    std::vector<std::string> names = {"Anelka", "Appiah", "Alex"};
+    bc::heap_sort(names.begin(), names.end());
+    for(const auto& s : names)
+        std::cout << s << " ";
+    std::cout << "\n";
+    std::cout << HEADER_ONLY_LIB_DEF << "\n";
+
 
     return 0;
 }

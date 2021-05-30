@@ -1,19 +1,20 @@
 #Tests/HeaderOnly
-
 cmake_minimum_required(VERSION 3.17.3)
+project(bc_header_only_tests VERSION ${CMAKE_PROJECT_VERSION} LANGUAGES CXX)
 
-set(This BcHeaderOnlyTests)
+add_executable(${PROJECT_NAME} "")
 
-add_executable(${This} "")
-
-target_sources(${This} 
+target_sources(${PROJECT_NAME}
     PRIVATE
-        TestUtilities.cpp
+        test_sort.cpp
 )
 
-target_link_libraries(${This} PRIVATE gtest_main BcHeaderOnly)
+target_link_libraries(
+    ${PROJECT_NAME} 
+    PRIVATE gtest_main bc_header_only
+)
 
 add_test(
-    NAME ${This}
-    COMMAND ${This} --config Debug|Release
+    NAME ${PROJECT_NAME}
+    COMMAND ${PROJECT_NAME} --config Debug|Release
 )
