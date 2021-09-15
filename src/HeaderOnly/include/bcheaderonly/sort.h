@@ -68,7 +68,7 @@ namespace bc
         template<typename RanIter, typename Compare>
         void pop_heap(RanIter first, RanIter last, Compare comp)
         {
-            typedef typename std::iterator_traits<RanIer>::difference_type diff_t;
+            typedef typename std::iterator_traits<RanIter>::difference_type diff_t;
             diff_t len = last - first;
             if(len > 1)
             {
