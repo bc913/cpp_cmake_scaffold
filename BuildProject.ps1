@@ -102,7 +102,7 @@ if ($IsWin)
     $relativeBuildDir = $BuildDirName + "/" + $localBuildDirName
     $isCleanBuild = if($CleanBuild){1} else {0}
     
-    .\cmake_win_build.bat "Visual Studio 16 2019" $Platform $Configuration $relativeBuildDir $isCleanBuild
+    .\scripts\win\cmake_win_build.bat "Visual Studio 16 2019" $Platform $Configuration $relativeBuildDir $isCleanBuild
 }
 else
 {
