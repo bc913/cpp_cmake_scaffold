@@ -1,5 +1,4 @@
-#Root
-cmake_minimum_required(VERSION 3.17.3)
+cmake_minimum_required(VERSION 3.17.3...3.21.2 FATAL_ERROR)
 
 project(OTutorial VERSION 0.0.1 LANGUAGES CXX)
 
