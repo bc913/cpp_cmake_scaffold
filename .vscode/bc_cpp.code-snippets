@@ -1,0 +1,85 @@
+{
+	// Place your cpp_cmake_scaffold workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	"interface": {
+		"prefix": "interface",
+		"body": [
+			"class ${1:name}",
+			"{",
+			"public:",
+			"\tvirtual ~$1() = default;",
+			"};"
+		],
+		"description": "Inserts an abstract base class for interface usage."
+	},
+	"interface with clone": {
+		"prefix": "interface",
+		"body": [
+			"class ${1:name}",
+			"{",
+			"public:",
+			"\tvirtual ~$1() = default;",
+			"\tvirtual std::unique_ptr<$1> clone() const = 0;",
+			"};"
+		],
+		"description": "Inserts an abstract base class for interface usage with clone()."
+	},
+	"derived class": {
+		"prefix": "derived-class",
+		"body": [
+			"class ${1:name} : public ${2:base_class_name}",
+			"{",
+			"public:",
+			"\tvirtual ~$1() = default;",
+			"};"
+		],
+		"description": "Inserts a derived class for given base class."
+	},
+	"derived class with clone": {
+		"prefix": "derived-class-w-clone",
+		"body": [
+			"class ${1:name} : public ${2:base_class_name}",
+			"{",
+			"public:",
+			"\tvirtual ~$1() = default;",
+			"\tvirtual std::unique_ptr<$2> clone() const override;",
+			"};"
+		],
+		"description": "Inserts a derived class for given base class with clone override."
+	},
+	"lambda expression": {
+		"prefix": "lambda",
+		"body": [
+			"auto ${1:name} = [](const ${2:par}& ${3:par_name})",
+			"{",
+			"\t$4",
+			"};"
+		],
+		"description": "Insert lambda expression with single const arg reference."
+	},
+	"class function": {
+		"prefix": "class_function",
+		"body": [
+			"${1:return_type} ${2:class_name}::${3:function_name}(${4:arg_type} ${5:arg_name})",
+			"{",
+			"\t$6",
+			"}"
+		],
+		"description": "Inserts a class function."
+	},
+	"forconstref": {
+		"prefix": ["forr", "for-const"],
+		"body": [
+			"for(const auto& ${1:element} : ${2:container})",
+			"{",
+			"\t$3",
+			"}"
+		],
+		"description": "Inserts a const auto ref element for loop."
+	}
+}
