@@ -1,12 +1,15 @@
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
 # VS compilers symbols are hidden by default.
 # For GCC/Clang it is public by default so make it hidden.
 # https://www.youtube.com/watch?v=m0DwB4OvDXk
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN YES)
 #set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+# using set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c") will break this visibility feature and will not compile
+
 # To ensure maximum portability across various compilers and platforms
 # deactivate any compiler extensions
 set(CMAKE_C_EXTENSIONS FALSE)
