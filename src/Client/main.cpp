@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 
     std::cout << "== Client executable target is consuming shared library ==" << "\n";
-     auto e = bc::employee();
+    auto e = bc::employee();
     e.set_name("Anelka");
     std::cout << "Name: " << e.get_name() << "\n";
     std::cout << DYNAMIC_LIB_DEF << "\n";    
