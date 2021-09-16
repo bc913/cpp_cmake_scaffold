@@ -17,4 +17,5 @@ target_link_libraries(
 add_test(
     NAME ${PROJECT_NAME}
     COMMAND ${PROJECT_NAME} --config Debug|Release
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )

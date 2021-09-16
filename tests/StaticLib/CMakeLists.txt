@@ -14,4 +14,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE gtest_main bc_static)
 add_test(
     NAME ${PROJECT_NAME}
     COMMAND ${PROJECT_NAME} --config Debug|Release
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
