@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # For GCC/Clang it is public by default so make it hidden.
 # https://www.youtube.com/watch?v=m0DwB4OvDXk
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN YES)
 #set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # To ensure maximum portability across various compilers and platforms
 # deactivate any compiler extensions
