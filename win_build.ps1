@@ -17,6 +17,8 @@ if([string]::IsNullOrEmpty($Configuration) -or [string]::IsNullOrEmpty($Platform
     Write-Error -ForegroundColor Red "Configuration and Platform parameters can not be null or empty."
 }
 
+$BuildDirName = Join-Path -Path $BuildDirName -ChildPath $Configuration
+
 switch ($Configuration) 
 {
     "Release" { break }
@@ -34,6 +36,8 @@ Write-Host "CurrentDir $currentDir" -ForegroundColor Green
 
 # Set up global build directory
 $BuildDir = Join-Path -Path $currentDir -ChildPath $BuildDirName
+Write-Host "Build directory full path: $BuildDir"
+
 if(Test-Path $BuildDir)
 {
     if($CleanBuild)
