@@ -1,4 +1,4 @@
-param(  [string]$Configuration="Release", 
+param(  [string]$Configuration="Debug", 
         [string]$Platform="x64", 
         [string]$BuildDirName="out/build",
         [bool]$CleanBuild=$true,
