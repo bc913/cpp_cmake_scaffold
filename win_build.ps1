@@ -90,25 +90,9 @@ if ($IsWin)
         Default {Write-Error -ForegroundColor Red "Platform name can only be x64, x86 or Win32"}
     }
 
-    # create or clean build directory
-    $localBuildDir = Join-Path -Path $BuildDir -ChildPath $localBuildDirName
-    if(Test-Path $localBuildDir)
-    {
-        if($CleanBuild)
-        {
-            Remove-Item $localBuildDir -Recurse -Force
-        }
-    }
-    else
-    {
-        New-Item -Path $BuildDir -Name $localBuildDirName -ItemType "directory"
-    }
-
-    # Build/win-<arch>
-    $relativeBuildDir = $BuildDirName + "/" + $localBuildDirName
     $isCleanBuild = if($CleanBuild){1} else {0}
     
-    .\scripts\win\cmake_win_build.bat "Visual Studio 16 2019" $Platform $Configuration $relativeBuildDir $isCleanBuild
+    .\scripts\win\cmake_win_build.bat "Visual Studio 16 2019" $Platform $Configuration $BuildDir $isCleanBuild
 }
 else
 {
