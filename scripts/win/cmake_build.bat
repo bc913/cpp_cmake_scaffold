@@ -34,6 +34,6 @@ if %CLEANBUILD%==1 (cmake -G %GENERATOR% -A %PLATFORM% -B %BUILDDIR% -DCMAKE_INS
 cmake --build %BUILDDIR% --config %CONFIGURATION% --verbose
 @echo.
 
-@echo Install
-@echo.
-cmake --install %BUILDDIR% --config %CONFIGURATION% --verbose
+@REM @echo Install
+@REM @echo.
+@REM cmake --install %BUILDDIR% --config %CONFIGURATION% --verbose
