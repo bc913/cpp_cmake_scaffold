@@ -100,7 +100,7 @@ if ($IsWin)
 }
 else
 {
-    
+    Write-Warning "This is a Unix system so use unix_build.sh bash script to run the build."
 }
 
 
