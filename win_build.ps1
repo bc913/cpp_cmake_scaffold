@@ -1,4 +1,10 @@
-param([string]$Configuration="Release", [string]$Platform="x64", [string]$BuildDirName="build", [bool]$CleanBuild=$true, [string]$OutputDir="", [string]$OutputName="")
+param(  [string]$Configuration="Release", 
+        [string]$Platform="x64", 
+        [string]$BuildDirName="out/build",
+        [bool]$CleanBuild=$true,
+        [string]$OutputDir="", 
+        [string]$OutputName=""
+)
 
 # check values
 if([string]::IsNullOrEmpty($BuildDirName))
