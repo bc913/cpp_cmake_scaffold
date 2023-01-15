@@ -24,11 +24,13 @@ done
 
 source_root_dir=$(pwd)
 build_dir=$(pwd)/out/build/$configuration
+#install_dir=$(pwd)/out/install/$configuration
 
 pushd scripts/unix
 echo "Current dir: $(pwd)"
 
 if [ "$clean_configure" == true ]; then
+    echo "Removing build dir"
     rm -rf $build_dir
     ./configure.sh -c $configuration -s $source_root_dir -b $build_dir
 fi
