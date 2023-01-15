@@ -77,6 +77,9 @@ ctest -C <configuration> --verbose
 
 > VS Code: Run `CMake: Run Test` task. Since the settings file already have the build dir defined, it will run the tests properly w/o any additional setup.
 
+> For updated `GoogleTest` setup, you can refer this [link](https://google.github.io/googletest/quickstart-cmake.html)
+### References
+- [GoogleTest](https://cliutils.gitlab.io/modern-cmake/chapters/testing/googletest.html)
 ## Third-party dependencies (External)
 These are the dependencies which are external to this repo and/or created by other library authors. See [Third-Party Dependencies in CMake](doc/DependenciesCMake.md) section for details. Currently, no third-party dependecy is studied under this repo.
 ## Application Packaging
