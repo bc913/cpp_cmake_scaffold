@@ -70,10 +70,11 @@ Run convenience bash shell script `unix_build.sh` for configuration and building
 ## Testing
 `GoogleTest` API is used for testing purposes. The recommended way of consuming `GoogleTest` API is running `ExternalProject_Add` as provided.
 
-Navigate to the build tree and run the following command:
+**Navigate to the build directory(out/build/ for this repo) (Not to <Configuration> subdir)** and run the following command:
 ```bash
 ctest -C <configuration> --verbose
 ```
+> You don't need to run `cmake --install` command to be able to run the `ctest` command.
 
 > VS Code: Run `CMake: Run Test` task. Since the settings file already have the build dir defined, it will run the tests properly w/o any additional setup.
 
