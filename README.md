@@ -83,7 +83,26 @@ ctest -C <configuration> --verbose
 - [GoogleTest](https://cliutils.gitlab.io/modern-cmake/chapters/testing/googletest.html)
 ## Third-party dependencies (External)
 These are the dependencies which are external to this repo and/or created by other library authors. See [Third-Party Dependencies in CMake](doc/DependenciesCMake.md) section for details. Currently, no third-party dependecy is studied under this repo.
-## Application Packaging
+
+## Install
+CMake provides a cli command and/or arguments to install generated binary tree to a specified location.
+
+You can install the binary tree in various ways. One can choose one of two methods presented here.
+1. Configure stage
+```bash
+# Configure first
+cmake -S src -B build -DCMAKE_INSTALL_PREFIX=%INSTALLDIR%
+# or
+cmake -S src -B build --install-prefix=$install_dir
+
+# Install (No need to provide it here)
+cmake --install build
+```
+2. Install stage
+```bash
+cmake --install build --prefix=$install_dir
+```
+## Packaging
 Running the following commands will pack the output as a whole. None of the libraries will be packaged.
 
 Navigate to the build tree and run:
