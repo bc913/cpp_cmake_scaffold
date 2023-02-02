@@ -1,4 +1,5 @@
 # Useful Links
+https://coderefinery.github.io/cmake-workshop/
 https://www.brianlheim.com/2018/04/09/cmake-cheat-sheet.html
 
 https://github.com/lefticus/cpp_starter_project
