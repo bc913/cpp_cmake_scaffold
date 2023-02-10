@@ -117,5 +117,9 @@ cd .\Build\win-x64\
 cpack -G ZIP -C Release -B packaging -P BcStatic -D CPACK_MONOLITHIC_INSTALL=1 --verbose
 ```
 
+## [Miscellaneous Topics](doc/Misc.md)
+- Using <_d> suffix for Debug config
+- Linking targets based on configurations
+- Using git submodules for open-source package management
 ## [Useful Links](doc/Links.md)
 
