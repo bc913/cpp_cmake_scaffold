@@ -122,5 +122,6 @@ cpack -G ZIP -C Release -B packaging -P BcStatic -D CPACK_MONOLITHIC_INSTALL=1 -
 - Linking targets based on configurations
 - Using git submodules for open-source package management
 - _WIN32 vs _MSC_VER Predefined Macros
+## [Package Management](doc/PackageManagement.md)
 ## [Useful Links](doc/Links.md)
 
