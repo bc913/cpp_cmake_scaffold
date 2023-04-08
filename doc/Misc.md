@@ -94,3 +94,11 @@ MSVC++ 12.0 _MSC_VER == 1800 (Visual Studio 2013)
 MSVC++ 14.0 _MSC_VER == 1900 (Visual Studio 2015)
 MSVC++ 14.1 _MSC_VER == 1910 (Visual Studio 2017)
 ```
+
+## CMAKE_MODULE_PATH argument should be absolute path
+When passing a value for argument `CMAKE_MODULE_PATH` through CMake CLI, make sure it is absolute (full) path.
+
+```bash
+conan install ./src/conan/conanfile.txt --profile ./src/conan/conanprofile.txt -if conan
+cmake ./src -B ./src/build -DCMAKE_MODULE_PATH=$PWD/conan
+```
