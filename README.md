@@ -124,5 +124,8 @@ cpack -G ZIP -C Release -B packaging -P BcStatic -D CPACK_MONOLITHIC_INSTALL=1 -
 - _WIN32 vs _MSC_VER Predefined Macros
 - CMAKE_MODULE_PATH argument
 ## [Package Management](doc/PackageManagement.md)
+
+## Build Tools
+- [Ninja](doc/build_tools/ninja.md)
 ## [Useful Links](doc/Links.md)
 
