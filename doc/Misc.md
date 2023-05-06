@@ -102,3 +102,6 @@ When passing a value for argument `CMAKE_MODULE_PATH` through CMake CLI, make su
 conan install ./src/conan/conanfile.txt --profile ./src/conan/conanprofile.txt -if conan
 cmake ./src -B ./src/build -DCMAKE_MODULE_PATH=$PWD/conan
 ```
+## RPATH Handling
+- [CMake RPATH handling](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling)
+- [Why is CMake designed so that it removes runtime path when installing](https://stackoverflow.com/questions/32469953/why-is-cmake-designed-so-that-it-removes-runtime-path-when-installing)
