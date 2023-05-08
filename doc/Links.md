@@ -52,3 +52,7 @@ https://gitlab.kitware.com/cmake/community/-/wikis/doc/cpack/Component-Install-W
 
 ### Packaging
 https://cliutils.gitlab.io/modern-cmake/chapters/install/packaging.html
+
+
+### General
+- [A cross platform development Workflow for C/C++ Applications](https://mediatum.ub.tum.de/doc/1289361/906486.pdf)

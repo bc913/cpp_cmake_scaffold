@@ -129,5 +129,10 @@ cpack -G ZIP -C Release -B packaging -P BcStatic -D CPACK_MONOLITHIC_INSTALL=1 -
 
 ## Build Tools
 - [Ninja](doc/build_tools/ninja.md)
+
 ## [Useful Links](doc/Links.md)
+
+## Installers
+- [NSIS - Windows](https://nsis.sourceforge.io/Main_Page)
+- [Inno Setup](https://jrsoftware.org/isinfo.php)
 
