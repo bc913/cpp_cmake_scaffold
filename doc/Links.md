@@ -12,7 +12,9 @@ https://dev.to/dmerejkowsky/cmake-visual-studio-and-the-command-line
 
 https://preshing.com/20170511/how-to-build-a-cmake-based-project/
 
-
+### Targets
+- [CMake: Public VS Private VS Interface](https://leimao.github.io/blog/CMake-Public-Private-Interface/)
+- [Targets and Components](https://discourse.cmake.org/t/understanding-the-cmake-component-keyword-in-the-install-command/971)
 ### Useful Variables
 https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/Useful-Variables
 
@@ -56,3 +58,7 @@ https://cliutils.gitlab.io/modern-cmake/chapters/install/packaging.html
 
 ### General
 - [A cross platform development Workflow for C/C++ Applications](https://mediatum.ub.tum.de/doc/1289361/906486.pdf)
+
+
+### Repos
+- [github - pr0g/cmake-examples](https://github.com/pr0g/cmake-examples/tree/main)
