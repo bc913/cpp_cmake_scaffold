@@ -1,7 +1,6 @@
 # Header-Only library definitions
 cmake_minimum_required(VERSION 3.17.3 FATAL_ERROR)
 project(bc_header_only VERSION ${CMAKE_PROJECT_VERSION} LANGUAGES CXX)
-include(GNUInstallDirs)
 
 ##
 ## TARGET
@@ -42,18 +41,18 @@ install(
     DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-# Make target importable from the install directory
-install(
-    EXPORT
-    ${PROJECT_NAME}Targets
-    FILE ${PROJECT_NAME}Targets.cmake
-    DESTINATION ${CMAKE_CONFIG_INSTALL_DIR}
-)
+# # Make target importable from the install directory
+# install(
+#     EXPORT
+#     ${PROJECT_NAME}Targets
+#     FILE ${PROJECT_NAME}Targets.cmake
+#     DESTINATION ${CMAKE_CONFIG_INSTALL_DIR}
+# )
 
-##
-## BUILD TREE
-##
-export(
-    EXPORT ${PROJECT_NAME}Targets 
-    FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake
-)
+# ##
+# ## BUILD TREE
+# ##
+# export(
+#     EXPORT ${PROJECT_NAME}Targets 
+#     FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake
+# )
