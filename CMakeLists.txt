@@ -14,6 +14,10 @@ include(cmake/gtestsetup.cmake)
 add_subdirectory(src)
 
 #Tests
+# enable_testing() should be called in the root cmakeLists.txt
+enable_testing()
+# Uncomment if you want to consume third-party framework using ExternalProject_Add
+# include(cmake/gtestsetup.cmake)
 include(CTest)
 add_subdirectory(tests)
 
