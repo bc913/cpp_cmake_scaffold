@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.17.3 FATAL_ERROR)
-project(bc_client VERSION ${CMAKE_PROJECT_VERSION} LANGUAGES CXX)
+project(bc_client)
 
 add_executable(${PROJECT_NAME} "")
 

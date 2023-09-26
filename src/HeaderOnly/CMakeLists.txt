@@ -1,6 +1,5 @@
 # Header-Only library definitions
-cmake_minimum_required(VERSION 3.17.3 FATAL_ERROR)
-project(bc_header_only VERSION ${CMAKE_PROJECT_VERSION} LANGUAGES CXX)
+project(bc_header_only)
 
 ##
 ## TARGET

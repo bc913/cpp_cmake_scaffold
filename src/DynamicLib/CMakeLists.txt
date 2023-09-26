@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.17.3 FATAL_ERROR)
-project(bc_dynamic VERSION ${CMAKE_PROJECT_VERSION} LANGUAGES CXX)
+project(bc_dynamic)
 
 # target_sources() must be used if the sources are blank
 add_library(${PROJECT_NAME} SHARED "")
