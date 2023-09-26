@@ -1,14 +1,15 @@
-cmake_minimum_required(VERSION 3.17.3...3.21.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.25)
 
 project(OTutorial VERSION 0.0.1 LANGUAGES CXX)
 
-include(cmake/logvariables.cmake)
-include(cmake/globalsettings.cmake)
+set( SCAFFOLD_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+set( CMAKE_MODULE_PATH
+   ${SCAFFOLD_MODULE_PATH}
+   ${CMAKE_MODULE_PATH}
+)
 
-# Test setup
-# enable_testing() should be called in the root cmakeLists.txt
-enable_testing()
-include(cmake/gtestsetup.cmake)
+include(logvariables)
+include(globalsettings)
 
 # Source
 add_subdirectory(src)
