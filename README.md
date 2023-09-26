@@ -30,57 +30,127 @@ Please read [Libraries in CMake](doc/libraries_in_cmake.md) section for detailed
 3. **cmake**: In order to keep clean the root `CMakeLists.txt`, the common and global CMake logic is placed here.
 
 4. **scripts**: Some convenience scripts for windows and unix are placed under this directory. They are will be useful in remote builds especially.
-## Build
+## Development using CMake
+There are several ways to configure, build, test and package the repositories using CMake CLI or GUI. I will present methods here using CLI w and w/o `CMake Presets`
 
-### Windows
-`win_build.ps1` script takes care of configuring and building the project. It can determine the running OS and specifies the build directory accordingly. The default architecture is `x64`, default configuration is `Release` and default build directory name is `Build`.
+> In order to use `CMake Presets`, generate `CMakePresets.json` in the root directory.
 
-i.e. For Windows OS - x64 the build directory will be defined as `Build/win-x64` and the output will reside under `Build/win-x64/out`
+### VS Code integration
+I prefer using `CMakePresets` for development with VSCode since it eases the in advance setup. With the `CMake Tools` VS Code extension installed and few VSCode settings, CMake works smoothly using the UI without the need of manipulating VS Code files such as `launch.json` and `tasks.json`.
 
-- Clean build will configure and build the whole project from scratch. (Default)
-
-```powershell
-  .\win_build.ps1
+```json
+{
+    "cmake.useCMakePresets": "always",
+    "cmake.buildBeforeRun": false,
+    "cmake.configureOnEdit": false
+}
 ```
 
-- Build w/o configure
-```powershell
-.\win_build.ps1 -CleanBuild=$false
-```
-
-- Complete syntax
-```powershell
-.\win_build.ps1 -CleanBuild <true|false> -Configuration <Configuration_of_choice> -BuildDir <Top_Build_Dir_Name> -Platform <x86|x64>
-```
-### Unix
-Run convenience bash shell script `unix_build.sh` for configuration and building.
+### Configure
+The basic syntax for CMake configuration:
 ```bash
-# Configure and build in Debug
-./unix_build.sh -l
-
-# Build in Debug
-./unix_build.sh
-
-# Build in Release
-./unix_build.sh -c Release
-
-# Configure and build in Release
-./unix_build.sh -c Release -l
+# w/o presets
+cmake -S <root_dir> -B <build_output_dir> -G <Generator_name> -DCMAKE_<VARIABLE>=<VALUE>  
+# w presets
+cmake --preset <config_preset_name>
 ```
-## Testing
-`GoogleTest` API is used for testing purposes. The recommended way of consuming `GoogleTest` API is running `ExternalProject_Add` as provided.
 
-**Navigate to the build directory(out/build/ for this repo) (Not to <Configuration> subdir)** and run the following command:
+Navigate to root directory where root CMakeLists.txt is sitting.
 ```bash
+# w/o presets
+# Windows
+cmake -S . -B build -G "Visual Studio 16 2019" -DCMAKE_INSTALL_PREFIX=install
+# Linux
+cmake -S . -B build -G "Ninja Multi-Config" -DCMAKE_INSTALL_PREFIX=install
+
+# w presets
+## Windows
+cmake --preset msvc
+## Linux
+cmake --preset ninja_lnx
+```
+> The generators used here are based on `multi-config` so you don't have to configure for each build type (configuration) (i.e. Debug, Release). 
+### Build
+Basic syntax:
+```bash
+# Navigate to root dir
+# w/o presets
+cmake --build <build_output_dir> --config <config_type>
+# w presets
+cmake --build --preset <build_preset>
+```
+Example:
+```bash
+# w/o presets
+cmake --build build --config Release
+# w presets
+cmake --build --preset win_debug 
+```
+
+<details>
+  <summary>[OPTIONAL] Build using convenience scripts</summary>
+  
+  #### Windows
+
+  `win_build.ps1` script takes care of configuring and building the project. It can determine the running OS and specifies the build directory accordingly. The default architecture is `x64`, default configuration is `Release` and default build directory name is `Build`.
+
+  i.e. For Windows OS - x64 the build directory will be defined as `Build/win-x64` and the output will reside under `Build/win-x64/out`
+
+  - Clean build will configure and build the whole project from scratch. (Default)
+
+  ```powershell
+    .\win_build.ps1
+  ```
+
+  - Build w/o configure
+  ```powershell
+  .\win_build.ps1 -CleanBuild=$false
+  ```
+
+  - Complete syntax
+  ```powershell
+  .\win_build.ps1 -CleanBuild <true|false> -Configuration <Configuration_of_choice> -BuildDir <Top_Build_Dir_Name> -Platform <x86|x64>
+  ```
+  
+  #### Unix
+
+  Run convenience bash shell script `unix_build.sh` for configuration and building.
+  
+  ```bash
+  # Configure and build in Debug
+  ./unix_build.sh -l
+
+  # Build in Debug
+  ./unix_build.sh
+
+  # Build in Release
+  ./unix_build.sh -c Release
+
+  # Configure and build in Release
+  ./unix_build.sh -c Release -l
+  ```
+
+</details>
+
+### Testing
+Several third-party testing frameworks are available in the open source world such as [`googletest`](https://github.com/google/googletest), [`catch`](https://github.com/catchorg/Catch2/blob/devel/docs/cmake-integration.md#top) and [`boostTest`](https://www.boost.org/doc/libs/1_83_0/libs/test/doc/html/index.html)
+
+These frameworks can be integrated into the consumer repos using different methods within CMake i.e. `ExternalProject_Add` or `FetchContent` modules. `GoogleTest` is selected as third-party testing framework and integrated using `FetchContent` module. [[GoogleTest CMake integration]](https://google.github.io/googletest/quickstart-cmake.html)
+
+```bash
+# w/o preset
+# Navigate to the build directory(out/build/ for this repo) (Not to <Configuration> subdir)
 ctest -C <configuration> --verbose
+# w preset
+# No need to navigate to build dir. Run this command on the root.
+ctest --preset <test_preset_name>
 ```
 > You don't need to run `cmake --install` command to be able to run the `ctest` command.
 
 > VS Code: Run `CMake: Run Test` task. Since the settings file already have the build dir defined, it will run the tests properly w/o any additional setup.
 
-> For updated `GoogleTest` setup, you can refer this [link](https://google.github.io/googletest/quickstart-cmake.html)
 ### References
-- [GoogleTest](https://cliutils.gitlab.io/modern-cmake/chapters/testing/googletest.html)
+- [GoogleTest - ExternalProject_Add](https://cliutils.gitlab.io/modern-cmake/chapters/testing/googletest.html)
 ## Third-party dependencies (External)
 These are the dependencies which are external to this repo and/or created by other library authors. See [Third-Party Dependencies in CMake](doc/DependenciesCMake.md) section for details. Currently, no third-party dependecy is studied under this repo.
 
