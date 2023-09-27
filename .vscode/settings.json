@@ -1,5 +1,6 @@
 {
     "cmake.useCMakePresets": "always",
     "cmake.buildBeforeRun": false,
-    "cmake.configureOnEdit": false
+    "cmake.configureOnEdit": false,
+    "cmake.configureOnOpen": false
 }
