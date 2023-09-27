@@ -102,6 +102,61 @@ When passing a value for argument `CMAKE_MODULE_PATH` through CMake CLI, make su
 conan install ./src/conan/conanfile.txt --profile ./src/conan/conanprofile.txt -if conan
 cmake ./src -B ./src/build -DCMAKE_MODULE_PATH=$PWD/conan
 ```
+
 ## RPATH Handling
 - [CMake RPATH handling](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling)
 - [Why is CMake designed so that it removes runtime path when installing](https://stackoverflow.com/questions/32469953/why-is-cmake-designed-so-that-it-removes-runtime-path-when-installing)
+
+## TARGET_FILE Generator expression
+- [CMake TARGET_FILE Docs](https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html#genex:TARGET_FILE)
+- [CMake TARGET_FILE generator expression](https://www.scivision.dev/cmake-genex-target-file/)
+
+## Copy files/directory after build before install
+- [How to copy contents of a directory into build directory after make with CMake?](https://stackoverflow.com/questions/13429656/how-to-copy-contents-of-a-directory-into-build-directory-after-make-with-cmake)
+- [Installing additional files with CMake](https://stackoverflow.com/a/15696080)
+## Linking Windows DLL during CMake after build before install
+Unless otherwise stated, Windows OS searches for a [dependent DLL in the load time](https://learn.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-search-order) and the first location it looks for is the same directory of the running executable. Keeping this fact in mind that, when you try to link a shared library to an executable within CMake, you have to explicitly adjust the search paths for the CMake post-build.
+
+> NOTE: If you try to run the executable CMake target without adjusting the search path, the run will fail.
+> NOTE: The belowmentioned methods are NOT related to or part of CMake `install` process. As long as, you adjust the install locations properly for executables and their dependent shared libs, it will work fine. 
+
+There are several ways to do so:
+1. Copying the dependent shared library binaries as a `POST_BUILD` operation using `add_custom_command` and [`copy_directory` or `copy_if_different` or `copy`](https://cmake.org/cmake/help/latest/manual/cmake.1.html#cmdoption-cmake-E-arg-copy).
+
+```cmake
+
+# Define dependent shared libraries
+set(_SHARED_LIBS)
+list(APPEND _SHARED_LIBS bc_dynamic)
+
+target_link_libraries(
+    ${PROJECT_NAME} 
+    PRIVATE ${_SHARED_LIBS} bc_header_only bc_static
+)
+
+# copy the .dll file to the same folder as the executable
+if(WIN32) 
+    foreach(shared_lib ${_SHARED_LIBS})
+        message("Copying dependent ${shared_lib} binary for ${PROJECT_NAME}...")
+        add_custom_command(
+            TARGET ${PROJECT_NAME}
+            POST_BUILD
+            COMMAND
+                ${CMAKE_COMMAND} -E copy_directory
+                $<TARGET_FILE_DIR:${shared_lib}>
+                $<TARGET_FILE_DIR:${PROJECT_NAME}>
+            VERBATIM
+        )
+    endforeach()
+endif()
+
+```
+- References
+    - [cmake-examples github repo](https://github.com/pr0g/cmake-examples/tree/main/examples/core/shared)
+    - [SDL2d.dll not found when building with cmake](https://github.com/libsdl-org/SDL/issues/6399)
+    - [How to copy DLL files into the same folder as the executable using CMake?](https://stackoverflow.com/questions/10671916/how-to-copy-dll-files-into-the-same-folder-as-the-executable-using-cmake)
+    - 
+2. Define the shared library as `IMPORTED` target.
+
+- References
+    - [Importing and Exporting Guide](https://cmake.org/cmake/help/latest/guide/importing-exporting/index.html)

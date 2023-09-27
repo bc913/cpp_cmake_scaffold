@@ -1,7 +1,6 @@
 project(bc_client)
 
 add_executable(${PROJECT_NAME} "")
-
 target_sources(${PROJECT_NAME} 
     PRIVATE
         main.cpp
@@ -9,10 +8,30 @@ target_sources(${PROJECT_NAME}
 
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 
+# Define dependent shared libraries
+set(_SHARED_LIBS)
+list(APPEND _SHARED_LIBS bc_dynamic)
+
 target_link_libraries(
     ${PROJECT_NAME} 
-    PRIVATE bc_header_only bc_static bc_dynamic
+    PRIVATE ${_SHARED_LIBS} bc_header_only bc_static
 )
+
+# copy the .dll file to the same folder as the executable
+if(WIN32) 
+    foreach(shared_lib ${_SHARED_LIBS})
+        message("Copying dependent ${shared_lib} binary for ${PROJECT_NAME}...")
+        add_custom_command(
+            TARGET ${PROJECT_NAME}
+            POST_BUILD
+            COMMAND
+                ${CMAKE_COMMAND} -E copy_directory
+                $<TARGET_FILE_DIR:${shared_lib}>
+                $<TARGET_FILE_DIR:${PROJECT_NAME}>
+            VERBATIM
+        )
+    endforeach()
+endif()
 
 ## INSTALL
 ##

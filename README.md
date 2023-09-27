@@ -194,6 +194,10 @@ cpack -G ZIP -C Release -B packaging -P BcStatic -D CPACK_MONOLITHIC_INSTALL=1 -
 - _WIN32 vs _MSC_VER Predefined Macros
 - CMAKE_MODULE_PATH argument
 - RPATH Handling
+- TARGET_FILE generator expression
+- Copy files/directory after build before install
+- Linking Windows DLL during CMake after build before install
+
 ## [Package Management](doc/PackageManagement.md)
 - [Conan](doc/package_managers/conan.md)
 
