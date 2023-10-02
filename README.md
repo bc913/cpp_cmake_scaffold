@@ -31,21 +31,24 @@ Please read [Libraries in CMake](doc/libraries_in_cmake.md) section for detailed
 3. **cmake**: In order to keep clean the root `CMakeLists.txt`, the common and global CMake logic is placed here.
 
 4. **scripts**: Some convenience scripts for windows and unix are placed under this directory. They are will be useful in remote builds especially.
-## Development using CMake
-There are several ways to configure, build, test and package the repositories using CMake CLI or GUI. I will present methods here using CLI w and w/o `CMake Presets`
 
-> In order to use `CMake Presets`, generate `CMakePresets.json` in the root directory.
-
-### VS Code integration
+## VS Code integration
 I prefer using `CMakePresets` for development with VSCode since it eases the in advance setup. With the `CMake Tools` VS Code extension installed and few VSCode settings, CMake works smoothly using the UI without the need of manipulating VS Code files such as `launch.json` and `tasks.json`.
 
 ```json
 {
     "cmake.useCMakePresets": "always",
     "cmake.buildBeforeRun": false,
-    "cmake.configureOnEdit": false
+    "cmake.configureOnEdit": false,
+    "cmake.configureOnOpen": false,
 }
 ```
+
+
+## Development using CMake
+There are several ways to configure, build, test and package the repositories using CMake CLI or GUI. I will present methods here using CLI w and w/o `CMake Presets`
+
+> In order to use `CMake Presets`, generate `CMakePresets.json` in the root directory.
 
 ### Configure
 The basic syntax for CMake configuration:
@@ -150,15 +153,11 @@ ctest --preset <test_preset_name>
 
 > VS Code: Run `CMake: Run Test` task. Since the settings file already have the build dir defined, it will run the tests properly w/o any additional setup.
 
-### References
-- [GoogleTest - ExternalProject_Add](https://cliutils.gitlab.io/modern-cmake/chapters/testing/googletest.html)
-## Third-party dependencies (External)
-These are the dependencies which are external to this repo and/or created by other library authors. See [Third-Party Dependencies in CMake](doc/DependenciesCMake.md) section for details. Currently, no third-party dependecy is studied under this repo.
+> Other types of setups for [GoogleTest](https://cliutils.gitlab.io/modern-cmake/chapters/testing/googletest.html)
 
-## Install
-CMake provides a cli command and/or arguments to install generated binary tree to a specified location.
-
-You can install the binary tree in various ways. One can choose one of two methods presented here.
+### Install
+CMake provides a cli command and/or arguments to install generated binary tree to a specified location. You can install the binary tree in various ways. One can choose one of two methods presented here.
+> There is NO `preset` way of doing installation.
 1. Configure stage
 ```bash
 # Configure first
@@ -173,7 +172,8 @@ cmake --install build
 ```bash
 cmake --install build --prefix=$install_dir
 ```
-## Packaging
+
+### Packaging
 Running the following commands will pack the output as a whole. None of the libraries will be packaged.
 
 Navigate to the build tree and run:
@@ -187,6 +187,10 @@ i.e.
 cd .\Build\win-x64\
 cpack -G ZIP -C Release -B packaging -P BcStatic -D CPACK_MONOLITHIC_INSTALL=1 --verbose
 ```
+
+## Third-party dependencies (External)
+These are the dependencies which are external to this repo and/or created by other library authors. See [Third-Party Dependencies in CMake](doc/DependenciesCMake.md) section for details. Currently, no third-party dependecy is studied under this repo.
+
 
 ## [Miscellaneous Topics](doc/Misc.md)
 - Using <_d> suffix for Debug config
