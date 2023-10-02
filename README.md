@@ -44,6 +44,8 @@ I prefer using `CMakePresets` for development with VSCode since it eases the in 
 }
 ```
 
+If you are using `CMake Tools` Visual Studio extension, you don't need to define/use `c_cpp_properties.json` file under `.vscode` directory.
+
 
 ## Development using CMake
 There are several ways to configure, build, test and package the repositories using CMake CLI or GUI. I will present methods here using CLI w and w/o `CMake Presets`
