@@ -11,6 +11,7 @@ An example scaffold Cpp repo for CMake build system. The purpose is to give some
 
 ## Tested Systems
 - Windows w/ MSVC
+- Ubuntu 22.04 w/ gcc-11 and g++-11
 - Mac OS(Catalina 10.15 and BigSur 11.6) w/ Apple clang version 12.0.5 (clang-1205.0.22.11)
 
 ## Project structure
