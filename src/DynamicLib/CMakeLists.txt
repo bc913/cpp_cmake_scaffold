@@ -18,6 +18,9 @@ target_include_directories(
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> # or include
 )
 
+# $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> does the same job as 
+# install (INCLUDES DESTINATION include) so no need to expose it in install command. 
+
 # Link to a library as PRIVATE so any target that links against this (bcdynamic) 
 # target does not need to link against that library
 target_link_libraries(${PROJECT_NAME} PRIVATE bc_header_only)

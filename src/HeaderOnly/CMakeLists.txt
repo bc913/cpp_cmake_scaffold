@@ -16,6 +16,9 @@ target_include_directories(
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> # or include
 )
 
+# $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> does the same job as 
+# install (INCLUDES DESTINATION include) so no need to expose it in install command. 
+
 target_compile_definitions(
     ${PROJECT_NAME}
     INTERFACE 

@@ -21,6 +21,8 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> # or ${PROJECT_SOURCE_DIR}/include
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> # or include
 )
+# $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> does the same job as 
+# install (INCLUDES DESTINATION include) so no need to expose it in install command. 
 
 # Preproccessor definitions
 # Whoever consumes or links to this library will have this preprocessor definition since it is PUBLIC
