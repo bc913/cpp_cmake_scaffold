@@ -114,6 +114,7 @@ cmake ./src -B ./src/build -DCMAKE_MODULE_PATH=$PWD/conan
 ## Copy files/directory after build before install
 - [How to copy contents of a directory into build directory after make with CMake?](https://stackoverflow.com/questions/13429656/how-to-copy-contents-of-a-directory-into-build-directory-after-make-with-cmake)
 - [Installing additional files with CMake](https://stackoverflow.com/a/15696080)
+
 ## Linking Windows DLL during CMake after build before install
 Unless otherwise stated, Windows OS searches for a [dependent DLL in the load time](https://learn.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-search-order) and the first location it looks for is the same directory of the running executable. Keeping this fact in mind that, when you try to link a shared library to an executable within CMake, you have to explicitly adjust the search paths for the CMake post-build.
 
@@ -160,3 +161,50 @@ endif()
 
 - References
     - [Importing and Exporting Guide](https://cmake.org/cmake/help/latest/guide/importing-exporting/index.html)
+
+## `find_package()` usage
+In order to arrange dependencies between projects within the same build root, there is no need to use `find_package()`, `find_library()` etc. However, if one wants to consume an out-of-build (external) cmake project other than using package managers, several steps should be taken.
+
+> It is always advised to use `GNUInstallDirs` CMake module.
+
+1. The library (to-be consumed) CMake project has to define `export` properties using `install` command.
+    - The .config file has to be written to a location and that location should be passed to consumer build root using `CMAKE_PREFIX_PATH`.
+    ```cmake
+    include(GNUInstallDirs)
+    # If no destination is provided, default locations are used.
+    # https://cmake.org/cmake/help/v3.25/command/install.html#installing-targets
+    install(
+        TARGETS ${PROJECT_NAME}
+        EXPORT ${PROJECT_NAME}-config
+    )
+    # Write config 
+    install(
+        EXPORT ${PROJECT_NAME}-config
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+    )
+    # OPTIONAL: IF you want to copy headers
+    install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    ```
+    - This location is basically the `CMAKE_INSTALL_PREFIX` of the to-be-consumed library.
+    
+    ```bash
+    #!/bin/bash
+    cmake -B build/debug -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install
+    ```
+2. The consumer CMake build root should be configured by passing `-DCMAKE_PREFIX_PATH` with the value from the previous step.
+    - Configure
+    ```bash
+    cmake -B build/debug -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=$(pwd)/../library/install
+    ```
+    - The consumer projects within the build root, now can use `find_package()`
+    ```cmake
+    #....
+    find_package(calculator-static REQUIRED CONFIG)
+    target_link_libraries(${PROJECT_NAME} PRIVATE the_lib)
+    ```
+3. `find_package()` with config mode will execute a search under `CMAKE_PREFIX_PATH` with a [procedure](https://cmake.org/cmake/help/latest/command/find_package.html#config-mode-search-procedure) for the file `<lowercasePackageName>-config.cmake`.
+
+4. If one wants to use `MODULE` mode for `find_package()`, it will execute search under `CMAKE_MODULE_PATH` for the file `Find<PackageName>.cmake`.
+    - Package managers (`conan`) usually handles this by implicitly.
+### References
+- [cmake examples](https://github.com/pr0g/cmake-examples/tree/main/examples/core)
