@@ -7,6 +7,8 @@ FetchContent_Declare(
 )
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+# Disable gtest-gmock installation
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 # GoogleTest: `gtest_discover_tests` discovers tests by asking the _compiled test executable_
 # to enumerate its tests. `PRE_TEST` delays test discovery until just prior to test execution;
