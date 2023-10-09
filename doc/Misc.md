@@ -209,7 +209,7 @@ In order to arrange dependencies between projects within the same build root, th
 ### References
 - [cmake examples](https://github.com/pr0g/cmake-examples/tree/main/examples/core)
 
-## Installation of public headers
+## Installation of public & private headers
 1. Using `target_sources` with `FILE_SET` of type `HEADERS` 
 ```cmake
 # target_include_directories() definition is NOT required (except header only libs)
@@ -226,6 +226,13 @@ target_sources(
         BASE_DIRS logging/include
         FILES
             logging/include/core/logger.h
+# NOT TESTED
+    PRIVATE
+        FILE_SET private_header_files 
+        TYPE HEADERS
+        BASE_DIRS logging
+        FILES
+            logging/impl.h
 )
 
 # Make sure you pass FILE_SET to install(TARGET) command
@@ -250,10 +257,14 @@ target_include_directories(
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> # or include
 )
 
-# Only define .cpp files here
-target_sources(${PROJECT_NAME} PRIVATE mylib.cpp)
+# Only define .cpp and private header files here
+target_sources(${PROJECT_NAME} 
+                    PRIVATE 
+                        mylib.cpp
+                        impl.h
+)
 
-#
+# Only expose public header files
 include(GNUInstallDirs)
 install(
     TARGETS ${PROJECT_NAME}
@@ -268,7 +279,7 @@ install(
 )
 ```
 
-3. Using `PUBLIC_HEADERS` target property. (This feature is mostly used for MacOS amd iOS)
+3. Using `PUBLIC_HEADERS` and `PRIVATE_HEADERS` target property. (This feature is mostly used for MacOS amd iOS)
 ```cmake
 # Set the target property
 set_target_properties(
