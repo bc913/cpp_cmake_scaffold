@@ -61,4 +61,10 @@ https://cliutils.gitlab.io/modern-cmake/chapters/install/packaging.html
 
 
 ### Repos
-- [github - pr0g/cmake-examples](https://github.com/pr0g/cmake-examples/tree/main)
+- [pr0g/cmake-examples](https://github.com/pr0g/cmake-examples/tree/main)
+- [ttroy50/cmake-examples](https://github.com/ttroy50/cmake-examples)
+- Mizux
+    - [cmake-cpp](https://github.com/Mizux/cmake-cpp)
+    - [target_sources](https://github.com/Mizux/target_sources/tree/master)
+- [markeastwood82/nomnoms - Cmake components](https://github.com/markeastwood82/nomnoms)
+- [ClausKlein/nomnoms - Cmake components](https://github.com/ClausKlein/nomnoms/tree/develop)
