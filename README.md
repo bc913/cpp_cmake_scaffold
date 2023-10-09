@@ -205,6 +205,7 @@ These are the dependencies which are external to this repo and/or created by oth
 - Copy files/directory after build before install
 - Linking Windows DLL during CMake after build before install
 - `find_package()` usage
+- Installation of public headers
 
 ## [Package Management](doc/PackageManagement.md)
 - [Conan](doc/package_managers/conan.md)

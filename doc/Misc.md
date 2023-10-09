@@ -208,3 +208,86 @@ In order to arrange dependencies between projects within the same build root, th
     - Package managers (`conan`) usually handles this by implicitly.
 ### References
 - [cmake examples](https://github.com/pr0g/cmake-examples/tree/main/examples/core)
+
+## Installation of public headers
+1. Using `target_sources` with `FILE_SET` of type `HEADERS` 
+```cmake
+# target_include_directories() definition is NOT required (except header only libs)
+
+add_library(${PROJECT_NAME} STATIC "")
+
+target_sources(
+    ${_LOGGING_PROJECT} 
+    PRIVATE
+        logging/logger.cpp
+    PUBLIC
+        FILE_SET ${_LOGGING_PROJECT}_header_files 
+        TYPE HEADERS
+        BASE_DIRS logging/include
+        FILES
+            logging/include/core/logger.h
+)
+
+# Make sure you pass FILE_SET to install(TARGET) command
+# File sets are defined by the target_sources(FILE_SET) command. 
+# If the file set <set> exists and is PUBLIC or INTERFACE, any files in the set are installed under the destination
+include(GNUInstallDirs)
+install(
+    TARGETS ${_LOGGING_PROJECT}
+    EXPORT ${_LOGGING_PROJECT}Targets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    FILE_SET ${_LOGGING_PROJECT}_header_files DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+```
+2. Using `install(DIRECTORY)` or `install(FILES)` command
+```cmake
+target_include_directories(
+    ${PROJECT_NAME}
+    PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> # or ${PROJECT_SOURCE_DIR}/include
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> # or include
+)
+
+# Only define .cpp files here
+target_sources(${PROJECT_NAME} PRIVATE mylib.cpp)
+
+#
+include(GNUInstallDirs)
+install(
+    TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(
+    DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+```
+
+3. Using `PUBLIC_HEADERS` target property. (This feature is mostly used for MacOS amd iOS)
+```cmake
+# Set the target property
+set_target_properties(
+    ${PROJECT_NAME} 
+    PROPERTIES
+    PUBLIC_HEADER "include/static/mylib.h"
+)
+
+# Pass it over to install
+include(GNUInstallDirs)
+install(
+    TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+```
+> The problem with this approach is that `PUBLIC_HEADER` output artifact for `install(TARGETS)` command can NOT keep the nested include directory structure so for this example, `mylib.h` file will sit directly under `include` dir in the installation.
+### References
+- [Installing headers the modern way, regurgitated and revisited](https://discourse.cmake.org/t/installing-headers-the-modern-way-regurgitated-and-revisited/3238/4)
