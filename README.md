@@ -199,10 +199,10 @@ These are the dependencies which are external to this repo and/or created by oth
 - Linking targets based on configurations
 - Using git submodules for open-source package management
 - _WIN32 vs _MSC_VER Predefined Macros
-- CMAKE_MODULE_PATH argument
+- CMAKE_MODULE_PATH argument should be passed as an absolute path
 - RPATH Handling
 - TARGET_FILE generator expression
-- Copy files/directory after build before install
+- Copy files&directory after build before install
 - Linking Windows DLL during CMake after build before install
 - `find_package()` usage
 - Installation of public & private headers

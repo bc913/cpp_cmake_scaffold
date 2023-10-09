@@ -1,5 +1,17 @@
 # Miscellaneous
 
+- [Using <_d> suffix for Debug config](#Using-<_d>-suffix-for-Debug-config)
+- [Linking targets based on configurations](#Linking-targets-based-on-configurations)
+- [Using `git submodules` for open-source package management](#Using-`gitsubmodules`-for-opensource-package-management)
+- [_WIN32 vs _MSC_VER Predefined Macros](#_WIN32-vs-_MSC_VER-Predefined-Macros)
+- [CMAKE_MODULE_PATH argument should be passed as an absolute path](#CMAKE_MODULE_PATH-argument-should-be-passed-as-an-absolute-path)
+- [RPATH Handling](#RPATH-Handling)
+- [TARGET_FILE Generator expression](#TARGET_FILE-Generator-expression)
+- [Copy files&directory after build before install](#Copy-files&directory-after-build-before-install)
+- [Linking Windows DLL during CMake after build before install](#Linking-Windows-DLL-during-CMake-after-build-before-install)
+- [`find_package()` usage](#`find_package()`-usage)
+- [Installation of public & private headers](#Installation-of-public-&-private-headers)
+
 ## Using <_d> suffix for Debug config
 In order to append "_d" suffix for the targets based on configurations, use the
 following command:
@@ -37,7 +49,7 @@ target_link_libraries ( ${PROJECT_NAME}
 
 - [Ref](https://stackoverflow.com/questions/2209929/linking-different-libraries-for-debug-and-release-builds-in-cmake-on-windows)
 
-## Using `git submodules` for open-source package management
+## Using `git submodules` for opensource package management
 You can use `git submodules` to bring external dependencies to your current project. If the repo has cmake support, you only need to add the target (link) to your projects i.e. GLFW. However, if the external repo has NO cmake setup available i.e. imgui, some additional setup has to be made to be consumed by other cmake targets.
 
 Steps:
@@ -95,7 +107,7 @@ MSVC++ 14.0 _MSC_VER == 1900 (Visual Studio 2015)
 MSVC++ 14.1 _MSC_VER == 1910 (Visual Studio 2017)
 ```
 
-## CMAKE_MODULE_PATH argument should be absolute path
+## CMAKE_MODULE_PATH argument should be passed as an absolute path
 When passing a value for argument `CMAKE_MODULE_PATH` through CMake CLI, make sure it is absolute (full) path.
 
 ```bash
@@ -111,7 +123,7 @@ cmake ./src -B ./src/build -DCMAKE_MODULE_PATH=$PWD/conan
 - [CMake TARGET_FILE Docs](https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html#genex:TARGET_FILE)
 - [CMake TARGET_FILE generator expression](https://www.scivision.dev/cmake-genex-target-file/)
 
-## Copy files/directory after build before install
+## Copy files&directory after build before install
 - [How to copy contents of a directory into build directory after make with CMake?](https://stackoverflow.com/questions/13429656/how-to-copy-contents-of-a-directory-into-build-directory-after-make-with-cmake)
 - [Installing additional files with CMake](https://stackoverflow.com/a/15696080)
 
