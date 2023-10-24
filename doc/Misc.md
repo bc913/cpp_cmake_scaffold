@@ -11,6 +11,7 @@
 - [Linking Windows DLL during CMake after build before install](#Linking-Windows-DLL-during-CMake-after-build-before-install)
 - [`find_package()` usage](#`find_package()`-usage)
 - [Installation of public & private headers](#Installation-of-public-&-private-headers)
+- [Custom CMake functions](#Custom-CMake-functions)
 
 ## Using <_d> suffix for Debug config
 In order to append "_d" suffix for the targets based on configurations, use the
@@ -314,3 +315,49 @@ install(
 > The problem with this approach is that `PUBLIC_HEADER` output artifact for `install(TARGETS)` command can NOT keep the nested include directory structure so for this example, `mylib.h` file will sit directly under `include` dir in the installation.
 ### References
 - [Installing headers the modern way, regurgitated and revisited](https://discourse.cmake.org/t/installing-headers-the-modern-way-regurgitated-and-revisited/3238/4)
+
+## Custom CMake functions
+CMake provides custom scripting using `function` and `macro` mechanisms. The better approach is to place common functionality in `.cmake` files and make them available through `include()` command.
+1. Make sure the `.cmake` file's dir location is registered through `CMAKE_MODULE_PATH`.
+```cmake
+# Update CMAKE_MODULE_PATH in the root CMakeLists.txt
+# Option1:
+set( CUSTOM_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
+set( CMAKE_MODULE_PATH ${CUSTOM_MODULE_PATH} ${CMAKE_MODULE_PATH} )
+
+# Option2: Use list 
+if(NOT CMAKE_MODULE_PATH)
+    set(CMAKE_MODULE_PATH)
+endif()
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+```
+> Do NOT directly set `CMAKE_MODULE_PATH` and `CMAKE_FIND_ROOT_PATH` using `set(CMAKE_MODULE_PATH <some_path>)`
+2. Define the functions/macros in `.cmake` files
+```cmake
+function(bc_header_only_library TARGET_NAME)
+    # TARGET_NAME argument is the required argument
+    # Arg definitions
+    # boolean flag arguments with no value
+    set(flags)
+    # Single-valued arguments
+    set(args BASE_DIR)
+    # Multiple-valued(list) arguments
+    set(listArgs DEP_TARGETS DEFINES)
+    cmake_parse_arguments(arg "${flags}" "${args}" "${listArgs}" ${ARGN})
+    # check target_definitions.cmake file for details
+    # ...
+endfunction()
+```
+3. Make it available via `include(target_definitions)`
+4. Usage in any other `CMakeLists.txt` file.
+```cmake
+set(_header_files)
+list(APPEND _header_files 
+            header_only/print_utils.h
+)
+
+bc_header_only_library_file_set(${PROJECT_NAME} #-->TARGET_NAME
+                                BASE_DIR include
+                                PUBLIC_HEADERS ${_header_files}
+)
+```
