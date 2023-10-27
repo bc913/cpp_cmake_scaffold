@@ -159,7 +159,7 @@ function(bc_static_library TARGET_NAME)
     # Arg definitions
     set(flags)
     set(args PUBLIC_HEADERS_BASE_DIR)
-    set(listArgs SOURCES DEP_TARGETS DEFINES)
+    set(listArgs SOURCES PUBLIC_DEP_TARGETS PRIVATE_DEP_TARGETS PUBLIC_DEFINES PRIVATE_DEFINES)
     cmake_parse_arguments(arg "${flags}" "${args}" "${listArgs}" ${ARGN})
 
     # Checks
@@ -191,23 +191,38 @@ function(bc_static_library TARGET_NAME)
         $<BUILD_INTERFACE:${_build_interface_}> # or ${PROJECT_SOURCE_DIR}/include
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> # or include
     )
-    # Dependencies are optional.
-    if(arg_DEP_TARGETS AND NOT DEP_TARGETS IN_LIST arg_KEYWORDS_MISSING_VALUES)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${arg_DEP_TARGETS})
-    else()
-        message(STATUS "No dependency is defined for ${TARGET_NAME}.")
-    endif()
 
-    if(arg_DEFINES AND NOT DEFINES IN_LIST arg_KEYWORDS_MISSING_VALUES)
-        target_compile_definitions( ${TARGET_NAME} PRIVATE ${arg_DEFINES} )
-    endif()
+    # Dependencies are optional
+    target_link_libraries(${TARGET_NAME}
+            PRIVATE 
+                "$<$<AND:$<BOOL:arg_PRIVATE_DEP_TARGETS>,$<NOT:$<IN_LIST:arg_KEYWORDS_MISSING_VALUES,PRIVATE_DEP_TARGETS>>>:${arg_PRIVATE_DEP_TARGETS}>"
+            PUBLIC
+                "$<$<AND:$<BOOL:arg_PUBLIC_DEP_TARGETS>,$<NOT:$<IN_LIST:arg_KEYWORDS_MISSING_VALUES,PUBLIC_DEP_TARGETS>>>:${arg_PUBLIC_DEP_TARGETS}>"
+    )
+    # Compile_time Macro definitions
+    target_compile_definitions(${TARGET_NAME}
+            PRIVATE 
+                "$<$<AND:$<BOOL:arg_PRIVATE_DEFINES>,$<NOT:$<IN_LIST:arg_KEYWORDS_MISSING_VALUES,PRIVATE_DEFINES>>>:${arg_PRIVATE_DEFINES}>"
+            PUBLIC
+                "$<$<AND:$<BOOL:arg_PUBLIC_DEFINES>,$<NOT:$<IN_LIST:arg_KEYWORDS_MISSING_VALUES,PUBLIC_DEFINES>>>:${arg_PUBLIC_DEFINES}>"
+    )
+
+    # if(arg_DEP_TARGETS)
+    #     target_link_libraries(${TARGET_NAME} PRIVATE ${arg_DEP_TARGETS})
+    # else()
+    #     message(STATUS "No dependency is defined for ${TARGET_NAME}.")
+    # endif()
+    # if(arg_DEFINES AND NOT DEFINES IN_LIST arg_KEYWORDS_MISSING_VALUES)
+    #     target_compile_definitions( ${TARGET_NAME} PRIVATE ${arg_DEFINES} )
+    # endif()
+
 endfunction()
 
 function(bc_static_library_file_set TARGET_NAME)
     # Arg definitions
     set(flags)
     set(args BASE_DIR FILE_SET_NAME)
-    set(listArgs PUBLIC_HEADERS SOURCES DEP_TARGETS DEFINES)
+    set(listArgs PUBLIC_HEADERS SOURCES PUBLIC_DEP_TARGETS PRIVATE_DEP_TARGETS PUBLIC_DEFINES PRIVATE_DEFINES)
     cmake_parse_arguments(arg "${flags}" "${args}" "${listArgs}" ${ARGN})
 
     # Checks
@@ -270,16 +285,32 @@ function(bc_static_library_file_set TARGET_NAME)
         )
     endif()
 
-    # Dependencies
-    if(arg_DEP_TARGETS AND NOT DEP_TARGETS IN_LIST arg_KEYWORDS_MISSING_VALUES)
-        target_link_libraries( ${TARGET_NAME} PRIVATE ${arg_DEP_TARGETS} )
-    else()
-        message(STATUS "No dependency is defined for ${TARGET_NAME}.")
-    endif()
-    # Compile-time definitions
-    if(arg_DEFINES AND NOT DEFINES IN_LIST arg_KEYWORDS_MISSING_VALUES)
-        target_compile_definitions( ${TARGET_NAME} PRIVATE ${arg_DEFINES} )
-    endif()   
+
+    # Dependencies are optional
+    target_link_libraries(${TARGET_NAME}
+            PRIVATE 
+                "$<$<AND:$<BOOL:arg_PRIVATE_DEP_TARGETS>,$<NOT:$<IN_LIST:arg_KEYWORDS_MISSING_VALUES,PRIVATE_DEP_TARGETS>>>:${arg_PRIVATE_DEP_TARGETS}>"
+            PUBLIC
+                "$<$<AND:$<BOOL:arg_PUBLIC_DEP_TARGETS>,$<NOT:$<IN_LIST:arg_KEYWORDS_MISSING_VALUES,PUBLIC_DEP_TARGETS>>>:${arg_PUBLIC_DEP_TARGETS}>"
+    )
+    # Compile_time Macro definitions, optional too.
+    target_compile_definitions(${TARGET_NAME}
+            PRIVATE 
+                "$<$<AND:$<BOOL:arg_PRIVATE_DEFINES>,$<NOT:$<IN_LIST:arg_KEYWORDS_MISSING_VALUES,PRIVATE_DEFINES>>>:${arg_PRIVATE_DEFINES}>"
+            PUBLIC
+                "$<$<AND:$<BOOL:arg_PUBLIC_DEFINES>,$<NOT:$<IN_LIST:arg_KEYWORDS_MISSING_VALUES,PUBLIC_DEFINES>>>:${arg_PUBLIC_DEFINES}>"
+    )
+
+    # # Dependencies
+    # if(arg_DEP_TARGETS AND NOT DEP_TARGETS IN_LIST arg_KEYWORDS_MISSING_VALUES)
+    #     target_link_libraries( ${TARGET_NAME} PRIVATE ${arg_DEP_TARGETS} )
+    # else()
+    #     message(STATUS "No dependency is defined for ${TARGET_NAME}.")
+    # endif()
+    # # Compile-time definitions
+    # if(arg_DEFINES AND NOT DEFINES IN_LIST arg_KEYWORDS_MISSING_VALUES)
+    #     target_compile_definitions( ${TARGET_NAME} PRIVATE ${arg_DEFINES} )
+    # endif()
 
 endfunction()
 
