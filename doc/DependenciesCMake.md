@@ -200,6 +200,10 @@ macro(APPEND_GLSL_TO_TARGET target)
     endif()
 endmacro()
 ``` 
+- Make your target dependent to shaders by calling
+```cmake
+APPEND_GLSL_TO_TARGET(${PROJECT_NAME})
+```
 
 ### References
 - [https://gist.github.com/evilactually/a0d191701cb48f157b05be7f74d79396](https://gist.github.com/evilactually/a0d191701cb48f157b05be7f74d79396)
