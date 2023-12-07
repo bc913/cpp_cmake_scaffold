@@ -1,5 +1,12 @@
 # Package Management
 
+## Scope of `FetchContent` and `find_package`
+When `find_package` is called within a directory, its `IMPORTED_TARGETS` and Result variables are ONLY available to where it is called and its child directories.
+> As stated in the [docs](https://cmake.org/cmake/help/v3.25/command/find_package.html), when `GLOBAL` is passed to the command, the IMPORTED_TARGETS and its result_variables would be available to every other target regardless to their relative location of where `find_package` is declared.
+> However, I can't make it work so as quick fix: Declared `find_package` in the root `CMakeLists.txt`
+
+Looks like `FetchContent` is marked as GLOBAL by default which means wherever you declare your `FetchContent` commands, the `IMPORTED_TARGETS` and result_variables are available to any other target regardless their (relative) location. 
+
 ## Resources
 - [Trying Conan with Modern CMake: Dependencies](https://jfreeman.dev/blog/2019/05/22/trying-conan-with-modern-cmake:-dependencies/)
 - [The state of package management in C++ - Mathieu Ropert](https://accu.org/conf-docs/PDFs_2019/mathieu_ropert_-_the_state_of_package_management_in_cpp.pdf)
