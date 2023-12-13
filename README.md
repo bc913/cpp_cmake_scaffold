@@ -9,6 +9,35 @@ An example scaffold Cpp repo for CMake build system. The purpose is to give some
 - NSIS (If packaging with NSIS is chosen)
 - VSCode (highly recommended)
 
+### How to install CMake to Docker containers?
+- Linux (Ubuntu image)
+1. Default way (brings up the latest version available in package manager, NOT the latest CMake version)
+```dockerfile
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y \
+  cmake
+```
+2. Custom version
+```dockerfile
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y \
+  wget
+
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.25.3/cmake-3.25.3-Linux-x86_64.sh \
+      -q -O /tmp/cmake-install.sh \
+      && chmod u+x /tmp/cmake-install.sh \
+      && mkdir /opt/cmake-3.25.3 \
+      && /tmp/cmake-install.sh --skip-license --prefix=/opt/cmake-3.25.3 \
+      && rm /tmp/cmake-install.sh \
+      && ln -s /opt/cmake-3.25.3/bin/* /usr/local/bin
+```
+#### References:
+- [Docker/Ubuntu: Installing the latest cmake on Docker Image](https://www.softwarepronto.com/2022/09/dockerubuntu-installing-latest-cmake-on.html)
+- [Ubuntu: Upgrade to the latest cmake](https://www.softwarepronto.com/2022/09/ubuntu-upgrade-to-latest-cmake.html)
+- [How to install cmake 3.2 on Ubuntu](https://askubuntu.com/questions/610291/how-to-install-cmake-3-2-on-ubuntu)
+
 ## Tested Systems
 - Windows w/ MSVC
 - Ubuntu 22.04 w/ gcc-11 and g++-11
