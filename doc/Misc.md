@@ -10,8 +10,9 @@
 - [Copy files&directory after build before install](#Copy-files&directory-after-build-before-install)
 - [Linking Windows DLL during CMake after build before install](#Linking-Windows-DLL-during-CMake-after-build-before-install)
 - [`find_package()` usage](#`find_package()`-usage)
-- [Installation of public & private headers](#Installation-of-public-&-private-headers)
+- [Installation of public & private headers](#installation-of-public-&-private-headers)
 - [Custom CMake functions](#Custom-CMake-functions)
+- [CMake install for presets](#CMake-install-for-presets)
 
 ## Using <_d> suffix for Debug config
 In order to append "_d" suffix for the targets based on configurations, use the
@@ -361,3 +362,30 @@ bc_header_only_library_file_set(${PROJECT_NAME} #-->TARGET_NAME
                                 PUBLIC_HEADERS ${_header_files}
 )
 ```
+
+## CMake install for presets
+CMake does NOT provide any preset capability for install operations as of now. If you're using CMake presets and want to carry out install command, try one of the following.
+
+1. `cmake --build --preset win_debug --target install`. (Preferred) 
+    - To install w/o building:
+    ```cmake
+    set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY ON)
+    ```
+
+2. Defining custom target that refers to generate `cmake_install.cmake` file. (Only works for Release.)
+```cmake
+add_custom_target(INSTALL_TARGETS
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake_install.cmake
+)
+set_target_properties(INSTALL_TARGETS PROPERTIES EXCLUDE_FROM_ALL TRUE)
+```
+Then, call `cmake --build --preset win_release --target INSTALL_TARGETS`. Again, even if you had sucessfull Debug build, this call will result in error.
+
+3. This option requires the user explicitly pass hardcoded `CMAKE_BINARY_DIR` location to the command so not really preferred. However, it is still working.
+```bash
+cmake --install out/build/msvc --config Debug 
+```
+
+### References
+- [presets: Add install presets for `cmake --install --preset](https://gitlab.kitware.com/cmake/cmake/-/issues/24875)
+- [CMAKE_SKIP_INSTALL_ALL_DEPENDENCY - CMake Documentation](https://cmake.org/cmake/help/v3.26/variable/CMAKE_SKIP_INSTALL_ALL_DEPENDENCY.html)
