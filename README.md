@@ -236,6 +236,7 @@ These are the dependencies which are external to this repo and/or created by oth
 - `find_package()` usage
 - Installation of public & private headers
 - Custom CMake functions
+- CMake install for presets
 
 ## [Package Management](doc/PackageManagement.md)
 - [Conan](doc/package_managers/conan.md)
@@ -244,6 +245,7 @@ These are the dependencies which are external to this repo and/or created by oth
 - [Ninja](doc/build_tools/ninja.md)
 
 ## [Useful Links](doc/Links.md)
+## [Generator Expressions](doc/GeneratorExpressions.md)
 
 ## Installers
 - [NSIS - Windows](https://nsis.sourceforge.io/Main_Page)
