@@ -68,3 +68,5 @@ https://cliutils.gitlab.io/modern-cmake/chapters/install/packaging.html
     - [target_sources](https://github.com/Mizux/target_sources/tree/master)
 - [markeastwood82/nomnoms - Cmake components](https://github.com/markeastwood82/nomnoms)
 - [ClausKlein/nomnoms - Cmake components](https://github.com/ClausKlein/nomnoms/tree/develop)
+
+- [erichschroeter/scmake-auto-increment-build-number](https://github.com/erichschroeter/cmake-auto-increment-build-number)
