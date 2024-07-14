@@ -13,6 +13,7 @@
 - [Installation of public & private headers](#installation-of-public-&-private-headers)
 - [Custom CMake functions](#Custom-CMake-functions)
 - [CMake install for presets](#CMake-install-for-presets)
+- [Target architecture definition](#Target-architecture-definition)
 
 ## Using <_d> suffix for Debug config
 In order to append "_d" suffix for the targets based on configurations, use the
@@ -389,3 +390,62 @@ cmake --install out/build/msvc --config Debug
 ### References
 - [presets: Add install presets for `cmake --install --preset](https://gitlab.kitware.com/cmake/cmake/-/issues/24875)
 - [CMAKE_SKIP_INSTALL_ALL_DEPENDENCY - CMake Documentation](https://cmake.org/cmake/help/v3.26/variable/CMAKE_SKIP_INSTALL_ALL_DEPENDENCY.html)
+
+## Target architecture definition
+The architecture definition for target platforms in CMake is not very well documented. There are some solutions scattered around the web but no one explains it clearly. This is my clear and concise attempt to do so:
+> This topic has nothing to do with cross compiling.
+### Some CMake variables:
+- `CMAKE_HOST_SYSTEM_NAME` – name of the platform, on which CMake is running (host platform). On major operating systems this is set to the Linux, Windows or Darwin (MacOS) value.
+
+- `CMAKE_SYSTEM_NAME` – name of the platform, for which we are building (target platform). By default, this value is the same as CMAKE_HOST_SYSTEM_NAME, which means that we are building for local platform (no cross-compilation).
+
+- `CMAKE_HOST_SYSTEM_PROCESSOR`: The name of the CPU CMake is running on.
+
+- `CMAKE_SYSTEM_PROCESSOR`: When not cross-compiling, this variable has the same value as the CMAKE_HOST_SYSTEM_PROCESSOR variable. In many cases, this will correspond to the target architecture for the build, but this is not guaranteed. (E.g. on Windows, the host may be AMD64 even when using a MSVC cl compiler with a 32-bit target.)
+
+### Windows:
+Defining the target architecture is only available when `CMAKE_GENERATOR_PLATFORM` is defined. I typically use `Visual Studio Generators` for Windows builds. Use one of the following:
+1. CMakePresets.json `architecture` field under `configurePresets` section.
+```json
+{
+    "name": "msvc",
+    "displayName": "msvc config",
+    "generator": "Visual Studio 16 2019",
+    "architecture": {
+        "value": "x64",
+        "strategy": "set"
+    },
+    "hidden": false,
+    "binaryDir": "${sourceDir}/out/build/${presetName}",
+    "installDir": "${sourceDir}/out/install/${presetName}",
+    "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+    }
+}
+```
+2. CMake CLI by passing target platform value to `A` argument. 
+```bash
+cmake -G "Visual Studio 16 2019" -A Win32
+cmake -G "Visual Studio 16 2019" -A x64
+cmake -G "Visual Studio 16 2019" -A ARM
+cmake -G "Visual Studio 16 2019" -A ARM64
+```
+#### References
+- [Documentation - CMAKE_GENERATOR_PLATFORM](https://cmake.org/cmake/help/v3.30/variable/CMAKE_GENERATOR_PLATFORM.html#variable:CMAKE_GENERATOR_PLATFORM)
+- [VSCode-cmake-tools doc - Select your compilers](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/cmake-presets.md#select-your-compilers)
+- [How to cross-compile for embedded with CMake like a champ](https://kubasejdak.com/how-to-cross-compile-for-embedded-with-cmake-like-a-champ)
+
+### Linux - Ubuntu:
+- Some commands to get cpu (arch) info
+```bash
+uname -m
+uname -p
+lscpu
+cat /proc/cpuinfo
+```
+### MacOS [TODO]:
+### References
+- [Github-dotnet/runtime -> Some definition samples](https://github.com/dotnet/runtime/blob/main/src/mono/CMakeLists.txt)
+- [What are the possible values of CMAKE_SYSTEM_PROCESSOR?](https://stackoverflow.com/questions/70475665/what-are-the-possible-values-of-cmake-system-processor)

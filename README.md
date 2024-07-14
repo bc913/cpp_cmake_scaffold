@@ -237,6 +237,7 @@ These are the dependencies which are external to this repo and/or created by oth
 - Installation of public & private headers
 - Custom CMake functions
 - CMake install for presets
+- Target architecture definition
 
 ## [Package Management](doc/PackageManagement.md)
 - [Conan](doc/package_managers/conan.md)
