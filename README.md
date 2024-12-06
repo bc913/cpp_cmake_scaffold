@@ -246,6 +246,7 @@ These are the dependencies which are external to this repo and/or created by oth
 
 ## [Unit Test Frameworks](doc/UnitTestFrameworks.md)
 - Unity [C]
+- Boost Test
 
 ## [Useful Links](doc/Links.md)
 ## [Generator Expressions](doc/GeneratorExpressions.md)

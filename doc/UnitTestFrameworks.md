@@ -137,3 +137,6 @@ int main(int argc, char* argv[]) {
 - [https://www.throwtheswitch.org/build/cmake](https://www.throwtheswitch.org/build/cmake)
 - [https://github.com/microsoft/vscode-cmake-tools/issues/3153](https://github.com/microsoft/vscode-cmake-tools/issues/3153)
 - [https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/debug-launch.md](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/debug-launch.md)
+
+## 2. Boost.Test
+- [How to set up a CMake project using Unit Test Framework (extended)](https://www.boost.org/doc/libs/1_68_0/libs/test/doc/html/boost_test/section_faq.html#boost_test.section_faq.how_to_set_up_a_cmake_project_us)
