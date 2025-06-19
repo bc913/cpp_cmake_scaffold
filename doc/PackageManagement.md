@@ -7,6 +7,14 @@ When `find_package` is called within a directory, its `IMPORTED_TARGETS` and Res
 
 Looks like `FetchContent` is marked as GLOBAL by default which means wherever you declare your `FetchContent` commands, the `IMPORTED_TARGETS` and result_variables are available to any other target regardless their (relative) location. 
 
+## Consuming boost using FetchContent
+- [Boost with FetchContent](https://github.com/boostorg/cmake?tab=readme-ov-file#using-boost-with-fetchcontent)
+- https://cliutils.gitlab.io/modern-cmake/README.html
+- https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/
+- https://github.com/cpm-cmake/CPM.cmake?tab=readme-ov-file#snippets
+- https://github.com/cpp-best-practices/cmake_template/tree/main
+
+
 ## Resources
 - [Trying Conan with Modern CMake: Dependencies](https://jfreeman.dev/blog/2019/05/22/trying-conan-with-modern-cmake:-dependencies/)
 - [The state of package management in C++ - Mathieu Ropert](https://accu.org/conf-docs/PDFs_2019/mathieu_ropert_-_the_state_of_package_management_in_cpp.pdf)
