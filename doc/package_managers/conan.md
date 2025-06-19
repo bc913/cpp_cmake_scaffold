@@ -71,3 +71,4 @@ conan test .\test_package\ cpp_cmake_scaffold/0.1@demo/testing --build=never -pr
 - [CLion keeps generating CMAKE_GENERATOR_PLATFORM when using Ninja](https://youtrack.jetbrains.com/issue/CPP-32953)
 - [Github - question - CMakeToolchain requires VCVars](https://github.com/conan-io/conan/issues/12855)
 - [Conan - CMakeToolchain](https://docs.conan.io/1/reference/conanfile/tools/cmake/cmaketoolchain.html)
+- [Simple Example](https://www.codingwiththomas.com/blog/building-and-publishing-conan-packages-on-artifactory)
