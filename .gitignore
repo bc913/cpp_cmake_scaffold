@@ -2,3 +2,4 @@
 install/
 [Oo][Uu][Tt]/
 CMakeUserPresets.json
+.conan/
