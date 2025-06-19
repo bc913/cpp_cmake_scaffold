@@ -1,6 +1,8 @@
 # Conan 2.0 Setup
 ## Main differences from usual CMake practices
 - `conan install` is run during CMake configure step
+- `CMAKE_BUILD_TYPE` is passed to configure presets for `conan install` to work. Configuration is usually set within
+`build` and `test` presets.
 - The compiler, runtime settings are determined by CMake
 - CMakeToolchain is not used since it generates conan defined CMakePresets.json which limits your compiler, sdk choice.
 - Host profile is determined by CMake.
